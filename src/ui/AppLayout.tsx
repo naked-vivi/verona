@@ -1,8 +1,8 @@
 import Header from './Header'
 import CartOverview from '../features/cart/CartOverview'
 import { Outlet, useNavigation } from 'react-router-dom'
-import Loader from './LoaderIcon';
 import SearchOrder from '../features/order/SearchOrder';
+import LoaderIcon from './LoaderIcon';
 
 function AppLayout() {
     const navigation = useNavigation();
@@ -10,7 +10,7 @@ function AppLayout() {
 
     return (
         <div className='layout'>
-            {isLoading && <Loader />}
+            {isLoading && <LoaderIcon />}
 
             <Header />
             <SearchOrder />
