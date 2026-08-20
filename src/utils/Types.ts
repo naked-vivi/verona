@@ -7,6 +7,18 @@ export type Pizza = {
     imageUrl: string;
 };
 
+export interface CartItemData {
+    pizzaId: number; // or string, depending on your API
+    name: string;
+    quantity: number;
+    unitPrice: number;
+    totalPrice: number;
+}
+
+export interface CartState {
+    cart: CartItemData[];
+}
+
 export type OrderData = {
     id: string;
     status?: string;
