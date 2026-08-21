@@ -25,8 +25,6 @@ Fast React Pizza is a pizza ordering web app built with React, TypeScript, Redux
 - Redux Toolkit
 - React Redux
 - Tailwind CSS
-- ESLint
-- Prettier
 
 ## Project Structure
 
@@ -62,14 +60,6 @@ While building this project, I learned how to organize a React application by fe
 ## Challenges
 
 One of the main challenges in this project was managing the cart state across different pages while making sure the UI updated immediately whenever the user added, removed, or changed an item. Another challenge was handling form submissions with React Router actions while still validating the user’s input properly. I also had to work with external APIs, so I needed to handle failed requests and show helpful error messages instead of leaving the user confused. The geolocation feature was also a little challenging because it involved connecting browser permissions, coordinates, and reverse geocoding to fill in the user’s address smoothly. I also had to keep TypeScript types consistent across API data, Redux state, and component props. This helped make the code safer, but it required careful planning. Finally, I worked on making the interface responsive so the menu, cart, and order form could work well on different screen sizes.
-
-## Future Improvements
-
-- Add automated tests for cart reducers, route actions, and key user flows
-- Improve form validation for customer details and delivery addresses
-- Add order history for returning users
-- Add loading skeletons for menu and order pages
-- Improve accessibility for form controls and interactive cart buttons
 
 ## Author
 
