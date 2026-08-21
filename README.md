@@ -1,75 +1,73 @@
-# React + TypeScript + Vite
+# Fast Pizza
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Fast Pizza is a pizza ordering web application built with React, TypeScript, Redux, Redux Thunk, and Tailwind CSS. It allows users to enter their name, browse the pizza menu, add items to a cart, and place an order with or without priority delivery.
 
-Currently, two official plugins are available:
+The app calculates the total order price automatically based on the selected pizzas, quantities, and priority option. Payment is handled outside the application.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Enter user name before ordering
+- View available pizza menu
+- Add pizzas to cart
+- Update item quantities
+- Remove items from cart
+- Calculate total cart price
+- Choose priority order option
+- Place an order
+- Responsive design with Tailwind CSS
+- Global state management using Redux
+- Async logic handled with Redux Thunk
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React
+- TypeScript
+- Redux
+- Redux Thunk
+- Tailwind CSS
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Project Description
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Fast Pizza provides a simple and smooth ordering experience for users who want to quickly select pizzas and submit an order. The user starts by entering their name, then views the menu and adds pizzas to the cart.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+The cart keeps track of selected items, quantities, and prices. Before placing the order, the user can choose whether the order should be marked as priority. The final price is calculated in the app, while payment is completed outside the system.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Main Functionality
 
-```
+1. User enters their name.
+2. The pizza menu is displayed.
+3. User adds pizzas to the cart.
+4. User can update quantities or remove items.
+5. The app calculates the total price.
+6. User chooses priority delivery or normal delivery.
+7. User places the order.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## State Management
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Redux is used to manage application state such as:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- User information
+- Pizza menu
+- Cart items
+- Order details
+- Priority status
 
-```
+Redux Thunk is used to handle asynchronous operations, such as fetching menu data and submitting orders.
+
+## Styling
+
+Tailwind CSS is used for styling the user interface. It helps create a clean, responsive, and modern design with utility classes.
+
+## Payment
+
+This project does not include an online payment system. The order price is calculated inside the app, but payment is handled externally.
+
+## Purpose
+
+This project demonstrates how to build a modern React application using TypeScript, Redux, Redux Thunk, and Tailwind CSS. It focuses on routing, state management, cart logic, form handling, and creating a clean user experience.
+
+## Installation
+
+```bash
+npm install
+npm run dev
