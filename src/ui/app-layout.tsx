@@ -6,13 +6,13 @@ import OrderSkeleton from '../features/order/order-skeleton'
 import OrdersSkeleton from '../features/order/orders-skeleton'
 import Toaster from './toaster'
 
-// While the next page's data loads, show a placeholder shaped like that page
+// * Show a page-shaped skeleton while the next page's data loads
 function usePendingPage() {
     const navigation = useNavigation();
     const location = useLocation();
 
     const nextPath = navigation.state === "loading" ? navigation.location?.pathname : undefined;
-    // Changing filters on the menu only changes the URL's query, so stay on the page
+    // * Menu filter changes only update the query string, so stay on the page
     if (!nextPath || nextPath === location.pathname) return null;
 
     if (nextPath === "/menu") return <MenuSkeleton />;

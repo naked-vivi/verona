@@ -14,7 +14,7 @@ function Cart() {
   const totalQuantity = useAppSelector(getTotalCartQuantity);
   const totalPrice = useAppSelector(getTotalCartPrice);
   const { clear } = useCartActions();
-  useTitle('Your cart');
+  useTitle('My cart');
 
   if (!cart.length) return <EmptyCart />
 

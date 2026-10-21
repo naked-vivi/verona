@@ -2,7 +2,6 @@ import Lottie from "./lottie";
 
 interface ErrorViewProps {
   animation?: string;
-  // Large decorative element drawn behind the top of the text (the 404 page uses it)
   backdrop?: React.ReactNode;
   eyebrow: string;
   title: string;
@@ -10,9 +9,7 @@ interface ErrorViewProps {
   children?: React.ReactNode;
 }
 
-// Shared layout for the 404 page and route errors.
-// The outer box fills the visible area below the header (minus the page's own
-// padding, so the page doesn't scroll) and centers the content inside it.
+// * Fills the space below the header without making the page scroll, then centers its content
 function ErrorView({ animation, backdrop, eyebrow, title, message, children }: ErrorViewProps) {
   return (
     <div className="flex min-h-[calc(100dvh-14rem)] flex-col items-center justify-center md:min-h-[calc(100dvh-15.5rem)]">

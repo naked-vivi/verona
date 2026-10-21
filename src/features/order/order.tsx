@@ -1,45 +1,39 @@
 // Test ID: IIDSAT
 
-import { useFetcher, useLoaderData, useRevalidator, type LoaderFunctionArgs } from "react-router-dom";
-import { getOrder } from "../../services/api-restaurant";
-import type { OrderData, Pizza } from "../../utils/types";
 import { useEffect } from "react";
-import OrderStatus from "./order-status";
-import OrderReceipt from "./order-receipt";
-import LinkButton from "../../ui/link-button";
-import { useAppSelector } from "../../store";
-import { getSavedOrder } from "./order-history-slice";
-import { getStage, isFinished, STAGE_LABELS } from "./order-stage";
-import useTitle from "../../hooks/use-title";
+import { useFetcher, useLoaderData, useRevalidator, type LoaderFunctionArgs } from "react-router-dom";
 import { useNow } from "../../hooks/use-now";
+import useTitle from "../../hooks/use-title";
+import { getOrder } from "../../services/api-restaurant";
+import { useAppSelector } from "../../store";
+import LinkButton from "../../ui/link-button";
+import type { OrderData, Pizza } from "../../utils/types";
+import { getSavedOrder } from "./order-history-slice";
+import OrderReceipt from "./order-receipt";
+import { getStage, isFinished } from "./order-stage";
+import OrderStatus from "./order-status";
 
 const REFRESH_MS = 30_000;
 
 function Order() {
-  // Anyone can look up any order, so the API leaves out the customer's name and address
   const order: OrderData = useLoaderData();
   const fetcher = useFetcher<Pizza[]>();
   const revalidator = useRevalidator();
-  // Orders placed on this device also have the time they were placed
   const savedOrder = useAppSelector(getSavedOrder(order.id));
 
   const estimatedAt = new Date(order.estimatedDelivery).getTime();
   const isDoneOnLoad = order.status === "delivered";
-  // Tick every second for the countdown, until the order is delivered
   const now = useNow(isDoneOnLoad ? null : 1000);
   const stage = getStage(order.status, estimatedAt - now);
   const isLive = !isFinished(stage);
-  // The tab shows the live status, e.g. "In the oven · Order #VRN7QX"
-  useTitle(`${STAGE_LABELS[stage]} · Order #${order.id}`);
+  useTitle(`Order #${order.id}`);
 
-  // Load the menu in the background for each pizza's photo and ingredients
   useEffect(() => {
     if (!fetcher.data && fetcher.state === "idle")
       fetcher.load("/menu")
   }, [fetcher])
 
-  // Ask the API for the latest status every 30 seconds while the order is on its way
-  // (and only while the tab is visible)
+  // * Refresh every 30s while the order is on its way and the tab is visible
   useEffect(() => {
     if (!isLive) return;
     const timer = setInterval(() => {

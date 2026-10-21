@@ -3,9 +3,7 @@ import type { RootState } from "../../store";
 import type { SavedOrder } from "../../utils/types";
 import { loadPersistedState } from "../../utils/persist";
 
-// Orders placed from this browser. The API can look up one order by ID but
-// can't list them, so the list itself lives here (and in localStorage).
-
+// * The API can't list orders, so orders placed on this device are kept here
 type OrderHistoryState = {
   orders: SavedOrder[];
 };

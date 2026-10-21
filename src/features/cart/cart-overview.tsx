@@ -13,7 +13,6 @@ function CartOverview() {
   const barRef = useRef<HTMLAnchorElement>(null);
   const isVisible = useCartBarVisible();
 
-  // Small bounce when a pizza from the menu lands in the bar
   useEffect(() => {
     if (!isVisible) return;
 

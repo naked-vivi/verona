@@ -10,7 +10,6 @@ import { useReorder } from "./use-reorder";
 import { useNow } from "../../hooks/use-now";
 import useTitle from "../../hooks/use-title";
 
-// How many recent orders get a live status from the API on each visit
 const LIVE_LIMIT = 10;
 
 const STAGE_STYLES: Record<Stage, string> = {
@@ -35,7 +34,6 @@ function OrderHistory() {
   const live = useLoaderData() as Record<string, OrderData>;
   const { reorder, pendingId } = useReorder();
   useTitle("My orders");
-  // Re-check "late" vs "on its way" every half minute while the page is open
   const now = useNow(30_000);
 
   return (
@@ -83,7 +81,6 @@ function OrderHistory() {
                   </p>
 
                   <div className="mt-4 flex items-center gap-3">
-                    {/* Overlapping plates, like a stack of the pizzas in the order */}
                     <div className="flex shrink-0 -space-x-3">
                       {order.items.slice(0, 4).map((item) =>
                         item.imageUrl ? (
@@ -112,7 +109,6 @@ function OrderHistory() {
   );
 }
 
-// Fetch the latest status of recent orders; one failing lookup doesn't break the page
 export async function loader() {
   const recent = store.getState().orderHistory.orders.slice(0, LIVE_LIMIT);
   const results = await Promise.allSettled(recent.map((order) => getOrder(order.id)));

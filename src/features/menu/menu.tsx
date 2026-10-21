@@ -14,10 +14,8 @@ function Menu() {
 
   const visible = filterMenu(menu, filters);
   const soldOutCount = menu.filter((pizza) => pizza.soldOut).length;
-  // Every topping on the menu, offered as extras when customizing a pizza
   const allIngredients = [...new Set(menu.flatMap((pizza) => pizza.ingredients))].sort();
 
-  // How many pizzas each diet button would show with the current search
   const dietCounts = (["all", "veg", "meat"] as Diet[]).reduce(
     (counts, diet) => {
       counts[diet] = menu.filter(
@@ -38,7 +36,7 @@ function Menu() {
     if (next.diet !== "all") params.set("diet", next.diet);
     if (next.hideSoldOut) params.set("soldout", "hide");
     if (next.sort !== "featured") params.set("sort", next.sort);
-    // Replace (not push) so typing doesn't fill the back button's history
+    // * replace: typing in the search shouldn't fill the browser history
     setSearchParams(params, { replace: true, preventScrollReset: true });
   }
 
@@ -91,7 +89,7 @@ export async function loader() {
   return menu;
 }
 
-// Filters only change the URL's query string; don't refetch the menu for that
+// * Filter changes only touch the query string, so don't refetch the menu
 export function shouldRevalidate({ currentUrl, nextUrl, formMethod, defaultShouldRevalidate }: ShouldRevalidateFunctionArgs) {
   if (!formMethod && currentUrl.pathname === nextUrl.pathname) return false;
   return defaultShouldRevalidate;

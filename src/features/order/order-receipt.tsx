@@ -4,12 +4,11 @@ import { LogoMark } from "../../ui/logo";
 import UpdateOrder from "./update-order";
 import { describeCustomization } from "../../utils/cart-line";
 
-// Scalloped paper edge: half-circles in the page color bite into the receipt
+// * Scalloped paper edge: page-colored half circles along the receipt's edge
 const scallop = "h-2.5 w-full bg-[radial-gradient(circle_at_8px_0,rgb(var(--color-bg))_6px,transparent_6.5px)] [background-size:16px_10px] bg-repeat-x";
 
 interface OrderReceiptProps {
   order: OrderData;
-  // Present when the order was placed on this device; holds the delivery details
   savedOrder?: SavedOrder;
   menu?: Pizza[];
   isLoadingMenu: boolean;
@@ -19,7 +18,6 @@ function formatPlacedAt(dateStr: string) {
   return new Intl.DateTimeFormat("en", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(dateStr));
 }
 
-// "Deliver to" block, like the customer section on a restaurant ticket
 function DeliveryDetails({ order, savedOrder }: { order: OrderData; savedOrder?: SavedOrder }) {
   const customer = savedOrder?.customer || order.customer;
   const [lat, lng] = (savedOrder?.position ?? "").split(",");
@@ -91,7 +89,6 @@ function OrderReceipt({ order, savedOrder, menu, isLoadingMenu }: OrderReceiptPr
         <div className={scallop} aria-hidden="true" />
 
         <div className="px-7 pb-8 pt-6">
-          {/* Receipt header, like the top of a restaurant ticket */}
           <div className="flex flex-col items-center text-center">
             <LogoMark className="h-9 w-9 text-accent" />
             <p className="mt-3 font-display text-2xl uppercase tracking-[0.3em]">Verona</p>

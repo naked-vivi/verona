@@ -8,7 +8,6 @@ const initialState: CartState = {
     cart: loadPersistedState()?.cart ?? []
 }
 
-// What callers pass to addItem: the line ID and total are worked out here
 export type NewCartItem = Omit<CartItemData, "lineId" | "totalPrice">;
 
 const cartSlice = createSlice({
@@ -20,7 +19,6 @@ const cartSlice = createSlice({
             const lineId = makeLineId(item.pizzaId, item.addIngredients, item.removeIngredients);
             const existing = state.cart.find((line) => line.lineId === lineId);
 
-            // The same pizza with the same toppings just adds to the existing line
             if (existing) {
                 existing.quantity += item.quantity;
                 existing.totalPrice = existing.quantity * existing.unitPrice;
@@ -53,7 +51,6 @@ const cartSlice = createSlice({
         clearCart(state) {
             state.cart = [];
         },
-        // Undo support: put a removed line back where it was, or bring back a whole cart
         restoreItem(state, action: PayloadAction<{ item: CartItemData; index: number }>) {
             const { item, index } = action.payload;
             if (state.cart.some((line) => line.lineId === item.lineId)) return;
@@ -85,7 +82,6 @@ export const getTotalCartQuantity = (state: RootState) =>
 export const getTotalCartPrice = (state: RootState) =>
     state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
-// All lines of one pizza together (plain and customized), for the menu badge
 export const getCurrentQuantityById = (id: number) => (state: RootState) =>
     state.cart.cart.reduce((sum, item) => (item.pizzaId === id ? sum + item.quantity : sum), 0);
 

@@ -14,7 +14,6 @@ function CartItem({ item }: { item: CartItemData }) {
       {imageUrl ? (
         <img src={imageUrl} alt="" width={64} height={64} className="h-14 w-14 shrink-0 rounded-full object-cover ring-1 ring-line sm:h-16 sm:w-16" />
       ) : (
-        // Items saved before photos were added to the cart
         <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-subtle text-accent sm:h-16 sm:w-16">
           <LogoMark className="h-8 w-8" />
         </span>

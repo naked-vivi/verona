@@ -10,8 +10,6 @@ import {
   restoreItem,
 } from "./cart-slice";
 
-// Cart changes that can be undone. Removing a line or clearing the cart shows
-// a toast with an "Undo" button that puts things back exactly as they were.
 export function useCartActions() {
   const dispatch = useAppDispatch();
   const cart = useAppSelector(getCart);
@@ -29,7 +27,6 @@ export function useCartActions() {
     });
   }
 
-  // Removes every version of one pizza (plain and customized) in one go
   function removePizza(pizzaId: number) {
     const removed = cart
       .map((item, index) => ({ item, index }))
@@ -40,7 +37,6 @@ export function useCartActions() {
     const count = removed.reduce((sum, { item }) => sum + item.quantity, 0);
     toast({
       message: `${count > 1 ? `${count} × ` : ""}${removed[0].item.name} removed`,
-      // Put them back in their original order (lowest position first)
       action: { label: "Undo", onClick: () => removed.forEach((entry) => dispatch(restoreItem(entry))) },
     });
   }
@@ -49,7 +45,6 @@ export function useCartActions() {
     dispatch(increaseItemQuantity(lineId));
   }
 
-  // Going below one removes the line, so that path gets the undo toast too
   function decrease(lineId: string) {
     const item = cart.find((line) => line.lineId === lineId);
     if (!item) return;

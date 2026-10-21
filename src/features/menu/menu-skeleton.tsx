@@ -1,4 +1,3 @@
-// Placeholder shaped like the menu, shown while the pizzas load
 function MenuSkeleton() {
   return (
     <div aria-busy="true" aria-label="Loading the menu">

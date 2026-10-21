@@ -6,7 +6,6 @@ import ThemeToggle from "./theme-toggle";
 import { useScrolled } from "../hooks/use-scrolled";
 
 function Header() {
-  // At the very top the header blends into the page; once scrolled it gets a border
   const scrolled = useScrolled();
 
   return (
@@ -26,7 +25,6 @@ function Header() {
         <SearchOrder />
 
         <div className="flex items-center gap-1 sm:gap-4">
-          {/* Baseline-aligned so the small caps "MENU" and the greeting sit on one line */}
           <div className="hidden items-baseline gap-4 md:flex">
             {[
               { to: "/menu", label: "Menu" },
@@ -45,7 +43,6 @@ function Header() {
             ))}
             <Username />
           </div>
-          {/* On small screens "My orders" is an icon, since the header has no room for words */}
           <NavLink
             to="/orders"
             viewTransition

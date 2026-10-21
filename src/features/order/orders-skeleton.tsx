@@ -1,4 +1,3 @@
-// Placeholder shaped like "My orders", shown while statuses load
 function OrdersSkeleton() {
   return (
     <div className="mx-auto max-w-4xl" aria-busy="true" aria-label="Loading your orders">

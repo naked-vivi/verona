@@ -8,8 +8,7 @@ export type Pizza = {
 };
 
 export interface CartItemData {
-    // One cart line per pizza + customization, e.g. "1|olives|basil".
-    // The same pizza with different toppings becomes a separate line.
+    // * One line per pizza + toppings, e.g. "1|olives|basil"
     lineId: string;
     pizzaId: number;
     name: string;
@@ -18,7 +17,7 @@ export interface CartItemData {
     totalPrice: number;
     addIngredients: string[];
     removeIngredients: string[];
-    imageUrl?: string; // only used for thumbnails, never sent to the API
+    imageUrl?: string;
 }
 
 export interface CartState {
@@ -49,7 +48,6 @@ export type OrderData = {
     priorityPrice: number;
 };
 
-// An order placed from this browser, kept in "My orders"
 export type SavedOrder = {
     id: string;
     createdAt: string;
@@ -57,10 +55,9 @@ export type SavedOrder = {
     priority: boolean;
     total: number;
     items: Omit<CartItemData, "totalPrice">[];
-    // Delivery details. The API only returns these when the order is placed
-    // (looking an order up by ID leaves them out), so they're kept here.
+    // * Only returned when the order is created, so they're saved here
     customer?: string;
     phone?: string;
     address?: string;
-    position?: string; // "latitude,longitude" when the customer shared their location
+    position?: string;
 };

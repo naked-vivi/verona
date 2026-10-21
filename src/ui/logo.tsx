@@ -1,8 +1,6 @@
 import { useId } from "react";
 
-// Verona logo: a pizza shaped like the oval of Verona's Roman Arena seen from
-// above, with one slice pulled out. Drawn in currentColor so it follows the theme.
-// Toppings are cut out of each slice with an SVG mask.
+// * Verona's Arena seen from above, drawn as a pizza; toppings are cut out with SVG masks
 
 type Topping = { cx: number; cy: number; r: number } | { leaf: string };
 
@@ -63,7 +61,7 @@ interface LogoMarkProps {
 }
 
 export function LogoMark({ className, title }: LogoMarkProps) {
-  // Mask ids must be unique on the page, so prefix them with a React id
+  // * Mask ids must be unique on the page
   const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
 
   return (
@@ -108,7 +106,6 @@ function Logo() {
         <span className="font-display text-lg uppercase leading-none tracking-[0.3em] text-ink sm:text-[1.4rem]">
           Verona
         </span>
-        {/* Hidden on small phones, where the header has no room for it */}
         <span className="mt-1 hidden text-[0.5rem] font-medium uppercase leading-none tracking-[0.24em] text-accent min-[400px]:block sm:text-[0.55rem]">
           Pizzeria · dal forno a te
         </span>

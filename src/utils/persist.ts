@@ -1,9 +1,6 @@
 import type { CartItemData, SavedOrder } from "./types";
 import { makeLineId } from "./cart-line";
 
-// Keeps the cart, the customer's name and their order history in localStorage,
-// so a page reload doesn't lose them. Only plain data is saved, never loading/error state.
-
 const STORAGE_KEY = "verona-state";
 const VERSION = 1;
 const MAX_SAVED_ORDERS = 20;
@@ -17,7 +14,7 @@ export type PersistedState = {
 const isStringArray = (value: unknown): value is string[] =>
   Array.isArray(value) && value.every((v) => typeof v === "string");
 
-// Accepts carts saved before customization existed and fills in the new fields
+// * Upgrades carts saved before customization existed
 function toCartItem(value: unknown): CartItemData | null {
   if (typeof value !== "object" || value === null) return null;
   const item = value as Record<string, unknown>;
@@ -66,7 +63,6 @@ export function loadPersistedState(): PersistedState | null {
     const raw = localStorage.getItem(STORAGE_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
 
-    // Ignore anything that doesn't look like what we saved (other versions, manual edits)
     if (parsed?.version !== VERSION || typeof parsed.username !== "string" || !Array.isArray(parsed.cart)) {
       cached = null;
     } else {
@@ -80,7 +76,7 @@ export function loadPersistedState(): PersistedState | null {
         : null;
     }
   } catch {
-    // Storage can be blocked (private mode) or hold invalid JSON
+    // * Storage can be blocked (private mode) or hold invalid JSON
     cached = null;
   }
 
@@ -94,6 +90,6 @@ export function savePersistedState(state: PersistedState) {
       JSON.stringify({ version: VERSION, ...state, orders: state.orders.slice(0, MAX_SAVED_ORDERS) })
     );
   } catch {
-    // Quota or privacy settings; the app still works, it just won't remember
+    // * Storage can be full or blocked
   }
 }

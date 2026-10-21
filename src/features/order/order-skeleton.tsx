@@ -1,4 +1,3 @@
-// Placeholder shaped like the order page, shown while an order loads
 function OrderSkeleton() {
   return (
     <div

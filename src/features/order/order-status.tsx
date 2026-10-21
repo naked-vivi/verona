@@ -18,7 +18,7 @@ function OrderIdCard({ id, note }: { id: string; note: string }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     } catch {
-      // Clipboard can be blocked; the ID is still on screen to copy by hand
+      // * Clipboard access can be blocked
     }
   }
 
@@ -27,7 +27,6 @@ function OrderIdCard({ id, note }: { id: string; note: string }) {
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="text-[0.65rem] font-medium uppercase tracking-[0.3em] text-muted">Order ID</p>
-          {/* Jost, not Italiana: Italiana's old-style numerals make IDs like "AB01" hard to read */}
           <p className="mt-2 select-all text-3xl font-light leading-none tracking-[0.25em]">{id}</p>
         </div>
         <button
@@ -62,7 +61,6 @@ const STEPS = ["Order placed", "On its way", "Delivered"];
 interface OrderStatusProps {
   order: OrderData;
   now: number;
-  // Only known for orders placed on this device
   placedAt?: string;
 }
 
@@ -72,8 +70,7 @@ function OrderStatus({ order, now, placedAt }: OrderStatusProps) {
   const stage = getStage(order.status, msLeft);
   const isDone = isFinished(stage);
 
-  // How far along the line to fill: by elapsed time when we know when it was placed,
-  // otherwise just up to "On its way"
+  // * Fill by elapsed time when the placed time is known, otherwise up to "On its way"
   let progress = 0.5;
   if (isDone) progress = 1;
   else if (placedAt) {
@@ -93,7 +90,6 @@ function OrderStatus({ order, now, placedAt }: OrderStatusProps) {
         )}
       </div>
 
-      {/* The illustrations have a white background, so they sit in a round "plate" */}
       <div className="mt-8 h-40 w-40 overflow-hidden rounded-full bg-white ring-1 ring-line sm:h-44 sm:w-44">
         <Lottie
           src={isDone ? arrivedAnimation : deliveryAnimation}
@@ -120,7 +116,6 @@ function OrderStatus({ order, now, placedAt }: OrderStatusProps) {
         </div>
       )}
 
-      {/* Progress line: fills with the time that has passed since the order was placed */}
       <div className="mt-10 max-w-md" role="progressbar" aria-label="Order progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress * 100)}>
         <div className="relative h-4">
           <span className="absolute inset-x-2 top-1/2 h-px -translate-y-1/2 bg-line" aria-hidden="true" />

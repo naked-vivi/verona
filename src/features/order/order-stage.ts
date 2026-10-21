@@ -1,5 +1,4 @@
-// The API only gives a status word and an estimated delivery time, so the stage
-// shown to customers is worked out from those two values.
+// * The API only returns a status and an ETA, so the stage is derived from both
 
 export type Stage = "preparing" | "on-the-way" | "late" | "delivered";
 
@@ -25,7 +24,6 @@ export function formatTime(dateStr: string) {
   return new Intl.DateTimeFormat("en", { hour: "2-digit", minute: "2-digit" }).format(new Date(dateStr));
 }
 
-// 23:41 style countdown (or 1:02:05 past an hour)
 export function formatCountdown(ms: number) {
   const total = Math.max(0, Math.floor(ms / 1000));
   const h = Math.floor(total / 3600);

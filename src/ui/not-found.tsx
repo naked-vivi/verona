@@ -2,8 +2,6 @@ import Button from "./button";
 import ErrorView from "./error-view";
 import useTitle from "../hooks/use-title";
 
-// Big outlined "404" that fades out towards the title. Decorative only, so screen
-// readers skip it and read the page's real heading instead.
 const big404 = (
   <p
     aria-hidden="true"

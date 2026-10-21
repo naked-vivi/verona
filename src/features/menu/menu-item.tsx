@@ -12,7 +12,6 @@ import { describeCustomization } from "../../utils/cart-line";
 import { useCartActions } from "../cart/use-cart-actions";
 import { useToast } from "../../ui/toast-context";
 
-// Wraps the part of the text that matches the search in an accent color
 function Highlight({ text, query }: { text: string; query: string }) {
   const q = query.trim().toLowerCase();
   const start = q ? text.toLowerCase().indexOf(q) : -1;
@@ -43,8 +42,7 @@ function MenuItem({ pizza, highlight = "", allIngredients }: MenuItemProps) {
 
   const { removePizza } = useCartActions();
 
-  // Every version of this pizza in the cart (plain and customized). The − / + buttons
-  // show their total and act on the most recently added version.
+  // * −/+ show the total of every version and act on the most recently added one
   const cart = useAppSelector(getCart);
   const lines = cart.filter((line) => line.pizzaId === id);
   const currentQuantity = lines.reduce((sum, line) => sum + line.quantity, 0);
@@ -89,7 +87,6 @@ function MenuItem({ pizza, highlight = "", allIngredients }: MenuItemProps) {
       </div>
 
       <div className="flex min-w-0 grow flex-col">
-        {/* Classic menu line: name, dotted leader, price */}
         <div className="flex items-baseline gap-2">
           <h3 className="font-display text-2xl leading-tight">
             <Highlight text={name} query={highlight} />

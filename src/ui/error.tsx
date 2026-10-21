@@ -5,14 +5,12 @@ import NotFound from './not-found';
 import orderErrorAnimation from '../assets/order-error.lottie?url';
 import useTitle from '../hooks/use-title';
 
-// Named RouteError (not Error) so `instanceof Error` below still means the built-in class
+// * Not named Error, so `instanceof Error` below still means the built-in class
 function RouteError() {
   const error = useRouteError();
   const revalidator = useRevalidator();
 
-  // No error at all means this was rendered as a normal page (the catch-all "*" route),
-  // so the address simply doesn't exist
-  // (React Router gives null here when there's no error)
+  // * React Router gives null when there's no error, i.e. the catch-all "*" route rendered this
   const isNotFound = error == null || (isRouteErrorResponse(error) && error.status === 404);
 
   const message = (
@@ -21,9 +19,8 @@ function RouteError() {
       : isRouteErrorResponse(error)
         ? `${error.status} ${error.statusText}`
         : "Something unexpected happened"
-  ).replace(/\.$/, ""); // the sentences below add their own period
+  ).replace(/\.$/, "");
 
-  // getOrder() throws "Couldn't find order #ID" when the ID doesn't exist
   const isMissingOrder = /couldn.t find order/i.test(message);
 
   useTitle(isNotFound ? "Page not found" : isMissingOrder ? "Order not found" : "Something went wrong");

@@ -7,8 +7,7 @@ import { addItem } from "../cart/cart-slice";
 import type { Pizza, SavedOrder } from "../../utils/types";
 import { priceWithExtras } from "../../utils/cart-line";
 
-// "Order again": puts a past order back in the cart using today's menu,
-// so prices are current and sold-out pizzas are left out.
+// * Uses today's prices and skips pizzas that are sold out
 export function useReorder() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -33,7 +32,6 @@ export function useReorder() {
             pizzaId: item.pizzaId,
             name: pizza.name,
             quantity: item.quantity,
-            // Today's price, plus the current charge for any extra toppings
             unitPrice: priceWithExtras(pizza.unitPrice, item.addIngredients.length),
             imageUrl: pizza.imageUrl,
             addIngredients: item.addIngredients,

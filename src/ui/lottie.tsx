@@ -1,7 +1,6 @@
 import { lazy, Suspense } from "react";
 
-// The Lottie player is loaded only when an animation is on screen,
-// so it doesn't add weight to the first page load.
+// * Loaded on demand so the Lottie player isn't part of the first page load
 const DotLottieReact = lazy(() =>
   import("@lottiefiles/dotlottie-react").then((module) => ({ default: module.DotLottieReact }))
 );

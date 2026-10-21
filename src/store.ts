@@ -13,7 +13,6 @@ const store = configureStore({
     }
 });
 
-// Save the name, cart and order history whenever one of them changes
 let last = {
     username: store.getState().user.username,
     cart: store.getState().cart.cart,

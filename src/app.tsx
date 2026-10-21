@@ -27,7 +27,6 @@ const router = createBrowserRouter([
         Component: Menu,
         loader: menuLoader,
         shouldRevalidate: menuShouldRevalidate,
-        // Shown on a first visit straight to /menu, before the data arrives
         HydrateFallback: MenuSkeleton,
         errorElement: <RouteError />,
       },

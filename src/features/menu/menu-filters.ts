@@ -1,6 +1,6 @@
 import type { Pizza } from "../../utils/types";
 
-// The API has no categories, so dietary tags come from each pizza's ingredients.
+// * The API has no categories, so tags are derived from ingredients
 
 const MEAT = ["ham", "prosciutto", "salami", "pepperoni", "chicken"];
 const FISH = ["anchovies"];
@@ -50,7 +50,6 @@ export const SORT_OPTIONS: { value: SortOrder; label: string }[] = [
   { value: "name", label: "Name: A to Z" },
 ];
 
-// Filters live in the URL (?q=&diet=&sort=&soldout=hide) so a filtered menu can be shared
 export function readFilters(params: URLSearchParams): MenuFilters {
   const diet = params.get("diet");
   const sort = params.get("sort");
@@ -90,7 +89,6 @@ export function filterMenu(menu: Pizza[], filters: MenuFilters) {
     case "name":
       return list.sort((a, b) => a.name.localeCompare(b.name));
     default:
-      // Keep the restaurant's order, but move sold-out pizzas to the end
       return list.sort((a, b) => Number(a.soldOut) - Number(b.soldOut));
   }
 }

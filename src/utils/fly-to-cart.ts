@@ -1,6 +1,3 @@
-// "Add to cart" animation: a copy of the pizza photo arcs from the menu
-// into the cart bar, then the cart bar gives a small bounce.
-
 export const CART_LANDED_EVENT = "cart:landed";
 
 const FLIGHT_MS = 760;
@@ -16,7 +13,7 @@ export function flyToCart(source: HTMLImageElement | null) {
     return;
   }
 
-  // Wait one frame: on the first add, the cart bar only appears after this render
+  // * Wait a frame: the cart bar may only appear after this render
   requestAnimationFrame(() => {
     const from = source.getBoundingClientRect();
     const target = document.querySelector<HTMLElement>("[data-cart-target]");
@@ -33,7 +30,6 @@ export function flyToCart(source: HTMLImageElement | null) {
     const dx = to.left + to.width / 2 - (startX + size / 2);
     const dy = to.top + to.height / 2 - (startY + size / 2);
     const endScale = END_SIZE / size;
-    // Lift the pizza up first, so the path is an arc rather than a straight line
     const lift = Math.min(160, Math.abs(dy) * 0.35 + 60);
 
     const flyer = source.cloneNode() as HTMLImageElement;

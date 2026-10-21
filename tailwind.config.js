@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-// Colors are CSS variables defined in src/index.css, so the light theme
-// (Rosso Verona) and dark theme (Notte all'Arena) share one set of class names.
+// * Colors are CSS variables from src/index.css, so both themes share class names
 const token = (name) => `rgb(var(--color-${name}) / <alpha-value>)`;
 
 export default {

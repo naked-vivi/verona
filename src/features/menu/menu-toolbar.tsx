@@ -47,7 +47,6 @@ function MenuToolbar({ filters, dietCounts, onChange }: MenuToolbarProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Row 1: search, plus the extra controls on large screens */}
       <div className="flex items-stretch gap-3">
         <div className="relative min-w-0 flex-1">
           <svg viewBox="0 0 24 24" className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
@@ -82,7 +81,6 @@ function MenuToolbar({ filters, dietCounts, onChange }: MenuToolbarProps) {
         </div>
       </div>
 
-      {/* Row 2: diet filters, plus the extra controls below large screens. Wraps instead of overflowing */}
       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
         <div role="group" aria-label="Filter by diet" className="grid grid-cols-3 gap-2 sm:flex">
           {DIET_OPTIONS.map((option) => {
@@ -99,7 +97,6 @@ function MenuToolbar({ filters, dietCounts, onChange }: MenuToolbarProps) {
                   }`}
               >
                 {option.label}
-                {/* Counts are hidden on small phones, where the three buttons share one row */}
                 <span className="ml-1.5 hidden tabular-nums opacity-60 min-[420px]:inline">{dietCounts[option.value]}</span>
               </button>
             );

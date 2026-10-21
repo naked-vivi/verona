@@ -9,7 +9,6 @@ const MAX_EXTRAS = 3;
 
 interface CustomizePizzaProps {
   pizza: Pizza;
-  // Every topping used anywhere on the menu, offered as extras
   allIngredients: string[];
   onClose: () => void;
   onAdd: (item: NewCartItem) => void;
@@ -47,15 +46,13 @@ function Chip({
   );
 }
 
-// Lets the customer take toppings off a pizza or add up to three extras.
-// The API stores these as addIngredients / removeIngredients on each cart item.
 function CustomizePizza({ pizza, allIngredients, onClose, onAdd }: CustomizePizzaProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [removed, setRemoved] = useState<string[]>([]);
   const [extras, setExtras] = useState<string[]>([]);
   const [quantity, setQuantity] = useState(1);
 
-  // The dialog only exists while open, so open it as soon as it mounts
+  // * Mounted only while open, so open the modal on mount
   useEffect(() => {
     dialogRef.current?.showModal();
   }, []);
@@ -84,7 +81,7 @@ function CustomizePizza({ pizza, allIngredients, onClose, onAdd }: CustomizePizz
     <dialog
       ref={dialogRef}
       onClose={onClose}
-      // Clicking the dimmed backdrop (the dialog element itself) closes it
+      // * Clicking the backdrop closes the dialog
       onClick={(e) => e.target === dialogRef.current && dialogRef.current?.close()}
       aria-labelledby={`customize-${pizza.id}-title`}
       className="m-auto max-h-[90dvh] w-[min(34rem,calc(100%-2rem))] overflow-y-auto rounded-3xl border border-line bg-surface p-0 text-ink backdrop:bg-black/40 backdrop:backdrop-blur-sm"
@@ -94,7 +91,6 @@ function CustomizePizza({ pizza, allIngredients, onClose, onAdd }: CustomizePizz
           <img src={pizza.imageUrl} alt="" width={72} height={72} className="h-16 w-16 shrink-0 rounded-full object-cover ring-1 ring-line sm:h-[4.5rem] sm:w-[4.5rem]" />
           <div className="min-w-0 flex-1">
             <p className="text-xs font-medium uppercase tracking-[0.3em] text-accent">Make it yours</p>
-            {/* Focus lands on the title when the dialog opens, not on the close button */}
             <h2 id={`customize-${pizza.id}-title`} tabIndex={-1} autoFocus className="mt-1 font-display text-3xl leading-tight focus:outline-none">{pizza.name}</h2>
             <p className="mt-1 text-sm text-muted">{formatCurrency(pizza.unitPrice)} · extras {formatCurrency(EXTRA_TOPPING_PRICE)} each</p>
           </div>

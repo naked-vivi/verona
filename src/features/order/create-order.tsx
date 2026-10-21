@@ -47,7 +47,7 @@ function CreateOrder() {
 
   if (!cart.length) return <EmptyCart />
 
-  // Send only the fields the API expects (the photo and line ID are just for our UI)
+  // * Send only the fields the API expects
   const cartForApi = cart.map(({ pizzaId, name, quantity, unitPrice, totalPrice, addIngredients, removeIngredients }) => ({
     pizzaId, name, quantity, unitPrice, totalPrice, addIngredients, removeIngredients,
   }));
@@ -115,7 +115,6 @@ function CreateOrder() {
             </div>
           </div>
 
-          {/* Priority as a selectable card */}
           <label
             htmlFor="priority"
             className={`flex cursor-pointer items-start gap-4 rounded-2xl border p-5 transition-colors duration-200 ${withPriority ? "border-accent bg-accent/5" : "border-line hover:border-ink/30"}`}
@@ -138,7 +137,6 @@ function CreateOrder() {
           </label>
         </div>
 
-        {/* Order summary */}
         <aside className="rounded-2xl border border-line bg-surface p-6 lg:sticky lg:top-24">
           <h2 className="font-display text-2xl">Your order</h2>
           <ul className="mt-5 space-y-3 text-sm">
@@ -207,12 +205,11 @@ export async function action({ request }: ActionFunctionArgs) {
 
   const newOrder = await createOrder(order);
 
-  // Actions run outside React, so this is one of the few places we use the store directly.
-  // Save the order to "My orders" (with photos for reordering), then empty the cart.
+  // * Actions run outside React, so the store is used directly here
   const cartLines: CartItemData[] = store.getState().cart.cart;
   store.dispatch(addOrder({
     id: newOrder.id,
-    // The API returns when it received the order (looking it up later doesn't)
+    // * Only the create response includes createdAt
     createdAt: newOrder.createdAt ?? new Date().toISOString(),
     estimatedDelivery: newOrder.estimatedDelivery,
     priority: order.priority,

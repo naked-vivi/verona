@@ -37,7 +37,6 @@ function Toaster({ children }: { children: React.ReactNode }) {
     <ToastContext.Provider value={show}>
       {children}
 
-      {/* Sits just above the floating cart bar when it's showing */}
       <div
         role="status"
         aria-live="polite"

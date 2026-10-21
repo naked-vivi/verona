@@ -2,11 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-  Theme tokens, stored as "R G B" so Tailwind can add opacity (e.g. bg-bg/40).
-  Light: Rosso Verona — pale marble and the pink-red stone of the Arena.
-  Dark:  Notte all'Arena — the Arena at night, lit by candles.
-*/
+/* * Theme tokens are "R G B" so Tailwind opacity modifiers (bg-bg/40) work in both themes */
 @layer base {
   :root {
     --color-bg: 246 241 240;
@@ -46,7 +42,6 @@
     color-scheme: dark;
   }
 
-  /* Plain CSS (not @apply) so these rules never depend on the Tailwind config being reloaded */
   body {
     background-color: rgb(var(--color-bg));
     color: rgb(var(--color-ink));
@@ -73,9 +68,6 @@
   }
 }
 
-/* ---------- Page transitions (React Router viewTransition) ---------- */
-
-/* The header and cart bar keep their place while the page content changes */
 .site-header {
   view-transition-name: site-header;
 }
@@ -106,8 +98,6 @@
   }
 }
 
-/* ---------- Small motion helpers ---------- */
-
 @keyframes rise-in {
   from {
     opacity: 0;
@@ -119,7 +109,6 @@
   animation: rise-in 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
-/* Skeleton shimmer: a soft band of light moving across the placeholder */
 .skeleton {
   background: linear-gradient(
       100deg,
