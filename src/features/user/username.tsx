@@ -1,4 +1,4 @@
-import { useAppSelector} from "../../store";
+import { useAppSelector } from "../../store";
 
 function Username() {
     const username = useAppSelector((state) => state.user.username)
@@ -6,7 +6,9 @@ function Username() {
     if (!username) return null;
 
     return (
-        <div className="hidden md:block text-sm font-semibold">{username}</div>
+        <div className="text-sm text-muted">
+            Ciao, <span className="font-medium text-ink">{username}</span>
+        </div>
     )
 }
 
