@@ -84,7 +84,7 @@ function CustomizePizza({ pizza, allIngredients, onClose, onAdd }: CustomizePizz
       // * Clicking the backdrop closes the dialog
       onClick={(e) => e.target === dialogRef.current && dialogRef.current?.close()}
       aria-labelledby={`customize-${pizza.id}-title`}
-      className="m-auto max-h-[90dvh] w-[min(34rem,calc(100%-2rem))] overflow-y-auto rounded-3xl border border-line bg-surface p-0 text-ink backdrop:bg-black/40 backdrop:backdrop-blur-sm"
+      className="no-scrollbar m-auto max-h-[90dvh] w-[min(34rem,calc(100%-2rem))] overflow-y-auto rounded-3xl border border-line bg-surface p-0 text-ink backdrop:bg-black/40 backdrop:backdrop-blur-sm"
     >
       <div className="p-6 sm:p-8">
         <div className="flex items-start gap-4">
