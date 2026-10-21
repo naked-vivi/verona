@@ -1,24 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-scrollbar">
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍕</text></svg>" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Verona — order Italian pizza straight from the oven." />
+
+  <!-- Link previews (LinkedIn, Slack, X). After deploying, change the image URL to the full
+       https:// address of your site, since some sites ignore relative image paths. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Verona · Pizzeria" />
+  <meta property="og:description" content="Italian pizza, straight out of the oven, straight to you." />
+  <meta property="og:image" content="/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#f6f1f0" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#15121a" media="(prefers-color-scheme: dark)" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Jost:wght@300..700&display=swap"
     rel="stylesheet" />
 
-  <title>Fast React Pizza Co.</title>
+  <!-- Apply the saved or system theme before the page paints, so there is no flash -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('verona-theme');
+        var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      } catch (e) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    })();
+  </script>
+
+  <title>Verona · Pizzeria</title>
 </head>
 
-<body class="bg-stone-100 text-stone-700">
+<body>
   <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 
 </html>
