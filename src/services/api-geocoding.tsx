@@ -1,3 +1,5 @@
+import { GEOCODING_URL } from "./config";
+
 type Position = {
   latitude: number;
   longitude: number;
@@ -5,7 +7,7 @@ type Position = {
 
 export async function getAddress({ latitude, longitude }: Position) {
   const res = await fetch(
-    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`
+    `${GEOCODING_URL}?latitude=${latitude}&longitude=${longitude}`
   );
   if (!res.ok) throw Error("Failed getting address");
 

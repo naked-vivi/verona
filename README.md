@@ -116,6 +116,7 @@ public/         Favicon, link-preview image, Cloudflare headers
 git clone git@github.com:naked-vivi/fast-pizza.git
 cd fast-pizza
 npm install
+cp .env.example .env
 npm run dev
 ```
 
@@ -126,7 +127,14 @@ npm run dev
 | `npm run preview` | Serve the production build locally |
 | `npm run lint` | Run ESLint |
 
-No environment variables are needed; the app uses a public pizza API.
+### Environment variables
+
+| Variable | What it is |
+| --- | --- |
+| `VITE_API_URL` | Base URL of the pizza API (menu and orders) |
+| `VITE_GEOCODING_URL` | Reverse-geocoding endpoint used by "Use my location" |
+
+Both have working values in [`.env.example`](.env.example).
 
 ## Deployment
 
@@ -134,6 +142,7 @@ The site is deployed on Cloudflare Pages:
 
 - **Build command:** `npm run build`
 - **Output directory:** `dist`
+- **Environment variables:** add `VITE_API_URL` and `VITE_GEOCODING_URL` in the project's settings, since `.env` isn't committed
 
 Cloudflare Pages serves `index.html` for app routes like `/menu` automatically, because the project has no `404.html`. Cache headers for the built assets are in [`public/_headers`](public/_headers).
 
