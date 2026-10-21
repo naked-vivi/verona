@@ -12,6 +12,7 @@ import { describeCustomization } from "../../utils/cart-line";
 import type { CartItemData } from "../../utils/types";
 
 import { fetchAddress } from "../user/user-slice";
+import useTitle from "../../hooks/use-title";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string) =>
@@ -27,6 +28,7 @@ const errorStyle = "mt-2 rounded-lg bg-danger-soft px-3 py-2 text-xs text-danger
 
 function CreateOrder() {
   const [withPriority, setWithPriority] = useState(false);
+  useTitle("Checkout");
   const { username, status: addressStatus, position, address, error: errorAddress } = useAppSelector((state) => state.user)
   const isLoadingAddress = addressStatus === "loading";
 

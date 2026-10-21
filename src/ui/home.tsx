@@ -2,9 +2,11 @@ import CreateUser from "../features/user/create-user";
 import Button from "./button";
 import { useAppSelector } from "../store";
 import { LogoMark } from "./logo";
+import useTitle from "../hooks/use-title";
 
 function Home() {
   const username = useAppSelector((state) => state.user.username)
+  useTitle("Home")
 
   return (
     // Fills the space below the header (minus the page padding, so nothing scrolls)

@@ -9,7 +9,8 @@ import OrderReceipt from "./order-receipt";
 import LinkButton from "../../ui/link-button";
 import { useAppSelector } from "../../store";
 import { getSavedOrder } from "./order-history-slice";
-import { getStage, isFinished } from "./order-stage";
+import { getStage, isFinished, STAGE_LABELS } from "./order-stage";
+import useTitle from "../../hooks/use-title";
 import { useNow } from "../../hooks/use-now";
 
 const REFRESH_MS = 30_000;
@@ -28,6 +29,8 @@ function Order() {
   const now = useNow(isDoneOnLoad ? null : 1000);
   const stage = getStage(order.status, estimatedAt - now);
   const isLive = !isFinished(stage);
+  // The tab shows the live status, e.g. "In the oven · Order #VRN7QX"
+  useTitle(`${STAGE_LABELS[stage]} · Order #${order.id}`);
 
   // Load the menu in the background for each pizza's photo and ingredients
   useEffect(() => {

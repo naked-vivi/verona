@@ -3,6 +3,7 @@ import Button from './button';
 import ErrorView from './error-view';
 import NotFound from './not-found';
 import orderErrorAnimation from '../assets/order-error.lottie?url';
+import useTitle from '../hooks/use-title';
 
 // Named RouteError (not Error) so `instanceof Error` below still means the built-in class
 function RouteError() {
@@ -12,7 +13,7 @@ function RouteError() {
   // No error at all means this was rendered as a normal page (the catch-all "*" route),
   // so the address simply doesn't exist
   // (React Router gives null here when there's no error)
-  if (error == null || (isRouteErrorResponse(error) && error.status === 404)) return <NotFound />;
+  const isNotFound = error == null || (isRouteErrorResponse(error) && error.status === 404);
 
   const message = (
     error instanceof Error
@@ -23,7 +24,13 @@ function RouteError() {
   ).replace(/\.$/, ""); // the sentences below add their own period
 
   // getOrder() throws "Couldn't find order #ID" when the ID doesn't exist
-  if (/couldn.t find order/i.test(message)) {
+  const isMissingOrder = /couldn.t find order/i.test(message);
+
+  useTitle(isNotFound ? "Page not found" : isMissingOrder ? "Order not found" : "Something went wrong");
+
+  if (isNotFound) return <NotFound />;
+
+  if (isMissingOrder) {
     return (
       <ErrorView
         animation={orderErrorAnimation}

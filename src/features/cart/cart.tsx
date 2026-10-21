@@ -6,6 +6,7 @@ import { useCartActions } from './use-cart-actions';
 import EmptyCart from './empty-cart';
 import CartItem from './cart-item';
 import { formatCurrency } from '../../utils/helpers';
+import useTitle from '../../hooks/use-title';
 
 function Cart() {
   const username = useAppSelector((state) => state.user.username);
@@ -13,6 +14,7 @@ function Cart() {
   const totalQuantity = useAppSelector(getTotalCartQuantity);
   const totalPrice = useAppSelector(getTotalCartPrice);
   const { clear } = useCartActions();
+  useTitle('Your cart');
 
   if (!cart.length) return <EmptyCart />
 

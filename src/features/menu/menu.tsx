@@ -4,9 +4,11 @@ import MenuItem from "./menu-item";
 import MenuToolbar from "./menu-toolbar";
 import { filterMenu, matchesDiet, matchesQuery, readFilters, type Diet, type MenuFilters } from "./menu-filters";
 import type { Pizza } from "../../utils/types";
+import useTitle from "../../hooks/use-title";
 
 function Menu() {
   const menu: Pizza[] = useLoaderData();
+  useTitle("Menu");
   const [searchParams, setSearchParams] = useSearchParams();
   const filters = readFilters(searchParams);
 

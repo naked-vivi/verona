@@ -8,6 +8,7 @@ import { getSavedOrders } from "./order-history-slice";
 import { getStage, STAGE_LABELS, type Stage } from "./order-stage";
 import { useReorder } from "./use-reorder";
 import { useNow } from "../../hooks/use-now";
+import useTitle from "../../hooks/use-title";
 
 // How many recent orders get a live status from the API on each visit
 const LIVE_LIMIT = 10;
@@ -33,6 +34,7 @@ function OrderHistory() {
   const orders = useAppSelector(getSavedOrders);
   const live = useLoaderData() as Record<string, OrderData>;
   const { reorder, pendingId } = useReorder();
+  useTitle("My orders");
   // Re-check "late" vs "on its way" every half minute while the page is open
   const now = useNow(30_000);
 
