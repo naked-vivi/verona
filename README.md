@@ -17,7 +17,6 @@
 - [Getting started](#getting-started)
 - [Deployment](#deployment)
 - [License](#license)
-- [Author](#author)
 
 ## How I built it
 
@@ -141,7 +140,3 @@ Cloudflare Pages serves `index.html` for app routes like `/menu` automatically, 
 ## License
 
 Released under the [MIT License](LICENSE).
-
-## Author
-
-Built by [naked-vivi](https://github.com/naked-vivi).
