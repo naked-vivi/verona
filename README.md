@@ -6,7 +6,32 @@
 
 ![Verona — The best pizza. Straight out of the oven, straight to you.](public/preview.png)
 
-Verona started as the *Fast React Pizza* project from Jonas Schmedtmann's React course. I rebranded it and rebuilt most of the interface, then added features the course version doesn't have: pizza customization with topping prices, a live order tracker, order history with one-click reorder, menu search and filters, undo toasts and a full light/dark theme. It still uses the course's backend API, so everything new is built on the frontend.
+## Table of contents
+
+- [How I built it](#how-i-built-it)
+- [Screenshots](#screenshots)
+- [Features](#features)
+- [Design](#design)
+- [Tech stack](#tech-stack)
+- [Project structure](#project-structure)
+- [Getting started](#getting-started)
+- [Deployment](#deployment)
+- [License](#license)
+- [Author](#author)
+
+## How I built it
+
+I started from a simple ordering flow (menu, cart, checkout and order lookup) built with React Router loaders and actions for data, and Redux Toolkit for the cart and the customer's details. The pizzas and orders come from a public pizza API.
+
+Then I gave it an identity. I named it after Verona, designed a logo based on the city's Roman Arena seen from above, and built a light and a dark theme from the colors of Verona's marble and the Arena at night, using CSS variables with Tailwind so both themes share the same components.
+
+After that I focused on the details that make ordering feel good:
+
+1. **Finding a pizza:** search by name or ingredient, diet filters and sorting, all saved in the URL so a filtered menu can be shared.
+2. **Making it yours:** a customize dialog to take toppings off or add extras, with each extra priced into the order.
+3. **Feedback:** a pizza that flies into the cart, undo toasts, loading placeholders shaped like each page, and page transitions.
+4. **After ordering:** a live order page with a countdown, automatic status refresh and a receipt, plus a "My orders" page with one-click reorder.
+5. **Polish:** a cart and order history that survive a reload, designed 404 and error pages, page titles, and a responsive layout from phones to wide screens.
 
 ## Screenshots
 
@@ -46,20 +71,6 @@ Verona started as the *Fast React Pizza* project from Jonas Schmedtmann's React 
 - A page title for every page, including the live order status ("In the oven · Order #VRN7QX")
 - Responsive from 360px phones to wide screens, with keyboard focus states and reduced-motion support
 
-## What I added beyond the course
-
-| | Course version | Verona |
-| --- | --- | --- |
-| Branding | Yellow theme, monospace font | Own name, logo, palette and typography |
-| Theme | Light only | Light and dark, remembered per visitor |
-| Menu | Plain list | Search, diet filters, sorting, tags, customization |
-| Pizza toppings | Not supported | Add or remove toppings, priced per extra |
-| Cart | Lost on reload | Saved in the browser, with undo |
-| Order page | Static status | Live countdown, auto-refresh, progress line, receipt |
-| Order history | None | My orders with one-click reorder |
-| Loading | Full-screen spinner | Page-shaped skeletons and page transitions |
-| Errors | "Unknown error" text | 404, order-not-found and retry pages |
-
 ## Design
 
 - **Name:** Verona, the Italian city of Romeo and Juliet and of a Roman amphitheatre, the Arena, from 30 AD.
@@ -74,29 +85,14 @@ Verona started as the *Fast React Pizza* project from Jonas Schmedtmann's React 
 
 - **Type:** [Italiana](https://fonts.google.com/specimen/Italiana) for the logo, headings and pizza names; [Jost](https://fonts.google.com/specimen/Jost) for everything you read or tap.
 
-## Technical notes
-
-The backend is the course's API, which I can't change. Most of the interesting work was getting more out of it:
-
-- **No categories in the API.** Each pizza only has a name, price, photo, ingredients and a sold-out flag, so diet and spice tags are worked out from the ingredient list.
-- **Filters without refetching.** Search and filters live in the URL query string. A `shouldRevalidate` on the menu route stops React Router from reloading the menu every time they change.
-- **Hidden API fields.** Order items accept `addIngredients` and `removeIngredients`, which the course app never uses. I tested that the API stores them and keeps the line prices the app sends, so extra toppings show up correctly in the order total.
-- **Cart lines.** Each cart line has an ID made from the pizza and its topping changes, so a plain Margherita and a Margherita with extra olives are separate lines.
-- **No "list orders" endpoint.** The API can look up one order by ID but can't list them, so order history is a Redux slice saved to `localStorage`. The saved data is versioned and validated, and older carts are upgraded on load.
-- **Privacy.** Looking up an order by ID leaves out the address and phone, so they're saved from the response when the order is placed and only shown on the device that placed it.
-- **Live tracking.** A `useNow` hook ticks the countdown, and `useRevalidator` re-runs the order loader every 30 seconds while the tab is visible.
-- **Loading states.** Skeletons are chosen from React Router's navigation state, with `HydrateFallback` for direct visits. View transitions use React Router's built-in `viewTransition` support.
-- **Theming.** Colors are CSS variables stored as `R G B`, so Tailwind classes like `bg-accent/40` work in both themes. A small inline script applies the saved theme before first paint, so there's no flash of the wrong theme.
-- **Performance.** The Lottie player is lazy-loaded only when an animation is on screen, and Vite's fingerprinted assets are cached for a year on Cloudflare.
-
 ## Tech stack
 
-- [React 19](https://react.dev) and TypeScript
-- [Vite 8](https://vite.dev)
-- [React Router 7](https://reactrouter.com): loaders, actions, fetchers and view transitions
-- [Redux Toolkit 2](https://redux-toolkit.js.org) and React Redux
-- [Tailwind CSS 3](https://v3.tailwindcss.com)
-- [dotLottie React](https://github.com/LottieFiles/dotlottie-web) for animations
+- [React](https://react.dev) and TypeScript
+- [Vite](https://vite.dev)
+- [React Router](https://reactrouter.com): loaders, actions, fetchers and view transitions
+- [Redux Toolkit](https://redux-toolkit.js.org) and React Redux
+- [Tailwind CSS](https://tailwindcss.com)
+- [dotLottie](https://github.com/LottieFiles/dotlottie-web) for animations
 - Hosted on [Cloudflare Pages](https://pages.cloudflare.com)
 
 ## Project structure
@@ -109,15 +105,13 @@ src/
     order/      Checkout, order tracking, receipt, order history, reorder
     user/       Name and geolocation address
   hooks/        useNow, useScrolled, useTitle
-  services/     API calls to the restaurant API and reverse geocoding
+  services/     API calls for pizzas, orders and reverse geocoding
   ui/           Layout, header, logo, theme toggle, toasts, buttons, error pages
   utils/        Types, cart-line helpers, persistence, fly-to-cart animation
 public/         Favicon, link-preview image, Cloudflare headers
 ```
 
 ## Getting started
-
-You need Node.js 20.19+ or 22.12+ (required by Vite 8).
 
 ```bash
 git clone git@github.com:naked-vivi/fast-pizza.git
@@ -133,7 +127,7 @@ npm run dev
 | `npm run preview` | Serve the production build locally |
 | `npm run lint` | Run ESLint |
 
-No environment variables are needed; the app talks to the public course API.
+No environment variables are needed; the app uses a public pizza API.
 
 ## Deployment
 
@@ -144,20 +138,9 @@ The site is deployed on Cloudflare Pages:
 
 Cloudflare Pages serves `index.html` for app routes like `/menu` automatically, because the project has no `404.html`. Cache headers for the built assets are in [`public/_headers`](public/_headers).
 
-## What I Learned
+## License
 
-While building this project, I learned how to organize a React application by features instead of putting all components in one folder. This made the project easier to understand, maintain, and scale. I also learned how React Router loaders and actions can be used to fetch data and handle form submissions close to the routes that need them. This helped keep the code cleaner and more organized. Redux Toolkit helped me manage global state more easily, especially for user information and cart data. I also learned how useful derived selectors are for calculating totals, item quantities, and other values that are reused across different components. This project also helped me improve my TypeScript skills by using types with React components, route actions, API functions, and Redux state. I became more comfortable writing safer and more predictable code. For styling, I used Tailwind CSS to build responsive layouts quickly with utility classes. I also practiced handling asynchronous work such as API requests, geolocation, loading states, and error messages.
-
-## Challenges
-
-One of the main challenges in this project was managing the cart state across different pages while making sure the UI updated immediately whenever the user added, removed, or changed an item. Another challenge was handling form submissions with React Router actions while still validating the user’s input properly. I also had to work with external APIs, so I needed to handle failed requests and show helpful error messages instead of leaving the user confused. The geolocation feature was also a little challenging because it involved connecting browser permissions, coordinates, and reverse geocoding to fill in the user’s address smoothly. I also had to keep TypeScript types consistent across API data, Redux state, and component props. This helped make the code safer, but it required careful planning. Finally, I worked on making the interface responsive so the menu, cart, and order form could work well on different screen sizes.
-
-## Credits
-
-- Based on the *Fast React Pizza* project from [Jonas Schmedtmann](https://github.com/jonasschmedtmann)'s *The Ultimate React Course*. The menu, pizza photos and order API (`react-fast-pizza-api.jonas.io`) come from the course.
-- Reverse geocoding by [BigDataCloud](https://www.bigdatacloud.com).
-- Animations from [LottieFiles](https://lottiefiles.com).
-- Fonts from [Google Fonts](https://fonts.google.com).
+Released under the [MIT License](LICENSE).
 
 ## Author
 
