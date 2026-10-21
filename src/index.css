@@ -2,35 +2,187 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components{
-  .input{
-    @apply rounded-full border border-stone-200 px-4 py-2 text-sm transition-all duration-300
-              focus:outline-none focus:ring focus:ring-yellow-400 md:px-6 md:py-3
+/*
+  Theme tokens, stored as "R G B" so Tailwind can add opacity (e.g. bg-bg/40).
+  Light: Rosso Verona — pale marble and the pink-red stone of the Arena.
+  Dark:  Notte all'Arena — the Arena at night, lit by candles.
+*/
+@layer base {
+  :root {
+    --color-bg: 246 241 240;
+    --color-surface: 255 251 250;
+    --color-subtle: 236 225 223;
+    --color-line: 230 216 213;
+    --color-ink: 42 28 31;
+    --color-muted: 132 106 110;
+    --color-accent: 168 66 63;
+    --color-accent-hover: 147 54 52;
+    --color-accent-ink: 255 246 244;
+    --color-bar: 42 28 31;
+    --color-bar-ink: 243 231 228;
+    --color-success: 79 122 74;
+    --color-success-ink: 244 250 242;
+    --color-danger: 168 50 45;
+    --color-danger-soft: 248 226 223;
+    color-scheme: light;
   }
-  
+
+  :root[data-theme='dark'] {
+    --color-bg: 21 18 26;
+    --color-surface: 29 25 36;
+    --color-subtle: 36 31 43;
+    --color-line: 44 38 50;
+    --color-ink: 239 230 216;
+    --color-muted: 165 154 138;
+    --color-accent: 227 194 122;
+    --color-accent-hover: 237 208 147;
+    --color-accent-ink: 27 22 32;
+    --color-bar: 227 194 122;
+    --color-bar-ink: 27 22 32;
+    --color-success: 143 191 134;
+    --color-success-ink: 21 18 26;
+    --color-danger: 240 140 130;
+    --color-danger-soft: 58 32 36;
+    color-scheme: dark;
+  }
+
+  /* Plain CSS (not @apply) so these rules never depend on the Tailwind config being reloaded */
+  body {
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-ink));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 300ms, color 300ms;
+  }
 }
 
-/* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
-.loader {
-  width: 45px;
-  aspect-ratio: 0.75;
-  --c: no-repeat linear-gradient(theme(colors.stone.800) 0 0);
-  background: var(--c) 0% 50%, var(--c) 50% 50%, var(--c) 100% 50%;
-  background-size: 20% 50%;
-  animation: loading 1s infinite linear;
+@layer components {
+  .input {
+    @apply rounded-full px-4 py-2 text-sm transition-all duration-300 focus:outline-none md:px-6 md:py-3;
+    border: 1px solid rgb(var(--color-line));
+    background-color: rgb(var(--color-surface));
+    color: rgb(var(--color-ink));
+  }
+
+  .input::placeholder {
+    color: rgb(var(--color-muted));
+  }
+
+  .input:focus {
+    box-shadow: 0 0 0 3px rgb(var(--color-accent) / 0.4);
+  }
 }
 
-@keyframes loading {
-  20% {
-    background-position: 0% 0%, 50% 50%, 100% 50%;
+/* ---------- Page transitions (React Router viewTransition) ---------- */
+
+/* The header and cart bar keep their place while the page content changes */
+.site-header {
+  view-transition-name: site-header;
+}
+
+.cart-bar {
+  view-transition-name: cart-bar;
+}
+
+::view-transition-old(root) {
+  animation: 160ms ease-in both page-out;
+}
+
+::view-transition-new(root) {
+  animation: 340ms cubic-bezier(0.2, 0.7, 0.2, 1) both page-in;
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
   }
-  40% {
-    background-position: 0% 100%, 50% 0%, 100% 50%;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
-  60% {
-    background-position: 0% 50%, 50% 100%, 100% 0%;
+}
+
+/* ---------- Small motion helpers ---------- */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
   }
-  80% {
-    background-position: 0% 50%, 50% 50%, 100% 100%;
+}
+
+.animate-rise-in {
+  animation: rise-in 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Skeleton shimmer: a soft band of light moving across the placeholder */
+.skeleton {
+  background: linear-gradient(
+      100deg,
+      rgb(var(--color-subtle)) 30%,
+      rgb(var(--color-surface)) 50%,
+      rgb(var(--color-subtle)) 70%
+    )
+    0 0 / 300% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
   }
+  to {
+    background-position: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  .animate-rise-in,
+  .skeleton {
+    animation: none;
+  }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+[data-theme='dark'] .custom-scrollbar::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cccccc;
+}
+
+[data-theme='dark'] .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #242424;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
