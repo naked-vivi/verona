@@ -1,4 +1,5 @@
-import { getAddress } from "../../services/apiGeocoding";
+import { getAddress } from "../../services/api-geocoding";
+import { loadPersistedState } from "../../utils/persist";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 type Position = {
@@ -40,7 +41,7 @@ export const fetchAddress = createAsyncThunk("user/fetchAddress",
 )
 
 const initialState: UserState = {
-  username: '',
+  username: loadPersistedState()?.username ?? '',
   status: "idle",
   position: {},
   address: '',
