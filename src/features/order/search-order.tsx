@@ -16,7 +16,7 @@ function SearchOrder() {
     }
 
     return (
-        <form onSubmit={handleSubmit} role="search" className="relative min-w-0">
+        <form onSubmit={handleSubmit} role="search" className="relative hidden min-[810px]:block min-w-0">
             <label htmlFor="order-search" className="sr-only">Find an order by its ID</label>
             <svg viewBox="0 0 24 24" className="pointer-events-none absolute left-3.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
                 <circle cx="11" cy="11" r="6.5" />
